@@ -22,23 +22,6 @@ def broadcast(message, _client):
         if client != _client:
             client.send(message)
 
-def handle_messages(client):
-    while True:
-        try:
-            message = client.recv(1024)
-            broadcast(message, client)
-        except:
-            index = clients.index(client)
-            username = usernames.index(index)
-
-            broadcast(f"@SERVER: {username} disconnected".encode(UNICODE), client)
-
-            clients.remove(client)
-            usernames.remove(username)
-            client.close()
-
-            break
-
 def receive_connections():
     while True:
         client, address = server.accept()
@@ -59,5 +42,22 @@ def receive_connections():
         thread = threading.Thread(target = handle_messages, args=(client,))
 
         thread.start()
+
+def handle_messages(client):
+    while True:
+        try:
+            message = client.recv(1024)
+            broadcast(message, client)
+        except:
+            index = clients.index(client)
+            username = usernames.index(index)
+
+            broadcast(f"@SERVER: {username} disconnected".encode(UNICODE), client)
+
+            clients.remove(client)
+            usernames.remove(username)
+            client.close()
+
+            break
 
 receive_connections()

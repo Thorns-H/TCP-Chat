@@ -13,6 +13,10 @@ client.connect((HOST,PORT))
 
 username = input("Enter your username : ")
 
+def write_messages():
+    message = f"{username}: {input('')}"
+    client.send(message.encode(UNICODE))
+
 def receive_messages():
     while True:
         try:
@@ -24,10 +28,6 @@ def receive_messages():
             print("An error ocurred")
             client.close()
             break
-
-def write_messages():
-    message = f"{username}: {input('')}"
-    client.send(message.encode(UNICODE))
 
 receive_thread = threading.Thread(target=receive_messages)
 receive_thread.start()
