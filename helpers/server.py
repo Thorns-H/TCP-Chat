@@ -26,18 +26,18 @@ def receive_connections():
     while True:
         client, address = server.accept()
 
-        client.send("@username".encode(UNICODE))
-        username = client.recv(1024).decode(UNICODE)
+        client.send("@username".encode("utf-8"))
+        username = client.recv(1024).decode("utf-8")
 
         clients.append(client)
         usernames.append(username) 
 
         print(f"{username} is connected with {str(address)}")
 
-        message = f"@SERVER: {username} joined the chat!".encode(UNICODE)
+        message = f"@SERVER: {username} joined the chat!".encode("utf-8")
         broadcast(message, client)
 
-        client.send("Connected to the server".encode(UNICODE))
+        client.send("Connected to the server".encode("utf-8"))
 
         thread = threading.Thread(target = handle_messages, args=(client,))
 
@@ -52,7 +52,7 @@ def handle_messages(client):
             index = clients.index(client)
             username = usernames.index(index)
 
-            broadcast(f"@SERVER: {username} disconnected".encode(UNICODE), client)
+            broadcast(f"@SERVER: {username} disconnected".encode("utf-8"), client)
 
             clients.remove(client)
             usernames.remove(username)

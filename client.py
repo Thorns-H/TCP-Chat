@@ -14,19 +14,22 @@ client.connect((HOST,PORT))
 username = input("Enter your username : ")
 
 def write_messages():
-    message = f"{username}: {input('')}"
-    client.send(message.encode(UNICODE))
+    while True:
+        message = f"{username}: {input('')}"
+        client.send(message.encode("utf-8"))
 
 def receive_messages():
     while True:
         try:
-            message = client.recv(1024).decode(UNICODE)
+            message = client.recv(1024).decode("utf-8")
 
             if message == "@username":
-                client.send(username.encode(UNICODE))
+                client.send(username.encode("utf-8"))
+            else:
+                print(message)
         except:
             print("An error ocurred")
-            client.close()
+            client.close
             break
 
 receive_thread = threading.Thread(target=receive_messages)
