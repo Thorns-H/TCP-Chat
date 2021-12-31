@@ -1,4 +1,4 @@
-# TCP - Chat
+# 🌐 TCP - Chat
 
 This script emulates a chat room using the TCP protocol and the [socket](https://docs.python.org/3/library/socket.html) 
 module with his low-level networking interface and the [thread](https://docs.python.org/3/library/threading.html) 
